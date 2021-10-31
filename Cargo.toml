@@ -1,0 +1,16 @@
+[package]
+name = "toy_blockchain"
+version = "0.1.0"
+edition = "2018"
+
+[lib]
+name = "toy_blockchainlib"
+path = "src/lib.rs"
+
+[[bin]]
+name = "toy_blockchain"
+path = "src/main.rs"
+
+[dependencies]
+hex = "0.3.2"
+crypto-hash = "0.3.3"
