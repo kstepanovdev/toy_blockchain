@@ -1,13 +1,13 @@
 use toy_blockchainlib::*;
 
 fn main() {
-    let mut block = Block::new(0, now(), vec![0; 32], 0, "Genesis".to_string());
-    println!("{:?}", block);
+    let difficulty = 0x0000ffffffffffffffffffffffffffff;
 
-    let h = block.hash();
-    println!("{:?}", &h);
+    let mut block = Block::new(0, now(), vec![0; 32], 0, "Genesis".to_string(), difficulty);
 
-    block.hash = h;
-    println!("{:?}", block);
+    block.hash = block.hash();
+    println!("{:?}", &block);
 
+    block.mine();
+    println!("{:?}", &block);
 }
