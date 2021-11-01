@@ -12,7 +12,14 @@ pub struct Block {
 }
 
 impl Block {
-    pub fn new(index: u32, timestamp: u128, previous_block_hash: Hash, nonce: u64, payload: String, difficulty: u128) -> Block {
+    pub fn new(
+        index: u32,
+        timestamp: u128,
+        previous_block_hash: Hash,
+        nonce: u64,
+        payload: String,
+        difficulty: u128,
+    ) -> Block {
         Block {
             index,
             timestamp,
@@ -49,7 +56,6 @@ impl Hashable for Block {
 
         bytes
     }
-
 }
 
 pub fn check_difficulty(hash: &Hash, difficulty: u128) -> bool {
