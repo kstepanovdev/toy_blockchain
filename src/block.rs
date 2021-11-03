@@ -1,4 +1,4 @@
-use std::fmt::{Debug, Formatter, self};
+use std::fmt::{self, Debug, Formatter};
 
 use super::*;
 
@@ -65,7 +65,9 @@ pub fn check_difficulty(hash: &Hash, difficulty: u128) -> bool {
 
 impl Debug for Block {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        write!(f, "Block[{}]: {} at: {}, with: {}, nonce: {}", 
+        write!(
+            f,
+            "Block[{}]: {} at: {}, with: {}, nonce: {}",
             &self.index,
             &hex::encode(&self.hash),
             &self.timestamp,
