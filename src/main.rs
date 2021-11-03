@@ -1,9 +1,9 @@
 use toy_blockchainlib::*;
 
 fn main() {
-    let difficulty = 0x000fffffffffffffffffffffffffffff;
+    let difficulty = 0x0000ffffffffffffffffffffffffffff;
 
-    let mut block = Block::new(0, 0, vec![0; 32], 0, "Genesis".to_string(), difficulty);
+    let mut block = Block::new(0, now(), vec![0; 32], 0, "Genesis".to_string(), difficulty);
 
     block.mine();
     let mut last_hash = block.hash.clone();
@@ -16,7 +16,7 @@ fn main() {
     for i in 1..=10 {
         let mut block = Block::new(
             i,
-            0,
+            now(),
             last_hash.clone(),
             0,
             "Another block".to_string(),
@@ -33,5 +33,6 @@ fn main() {
         );
 
         blockchain.blocks.push(block);
+        println!("Verified {}", blockchain.verify());
     }
 }
