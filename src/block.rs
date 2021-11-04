@@ -51,10 +51,12 @@ impl Hashable for Block {
         bytes.extend(&u128_bytes(&self.timestamp));
         bytes.extend(&self.previous_block_hash);
         bytes.extend(&u64_bytes(&self.nonce));
-        bytes.extend(self.transactions
-                              .iter()
-                              .flat_map(|transaction| transaction.bytes() )
-                              .collect::<Vec<u8>>());
+        bytes.extend(
+            self.transactions
+                .iter()
+                .flat_map(|transaction| transaction.bytes())
+                .collect::<Vec<u8>>(),
+        );
         bytes.extend(&u128_bytes(&self.difficulty));
 
         bytes

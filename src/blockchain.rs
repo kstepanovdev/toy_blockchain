@@ -1,4 +1,4 @@
-use std::{collections::HashSet};
+use std::collections::HashSet;
 
 use super::*;
 
@@ -27,7 +27,6 @@ impl Blockchain {
         }
     }
 
-
     pub fn update_with_block(&mut self, block: Block) -> Result<(), BlockValidationError> {
         let i = self.blocks.len();
 
@@ -38,8 +37,7 @@ impl Blockchain {
         } else if i != 0 {
             let prev_block = &self.blocks[i - 1];
             if block.timestamp <= prev_block.timestamp {
-                return Err(BlockValidationError::AchronologicalTimestamp)
-                
+                return Err(BlockValidationError::AchronologicalTimestamp);
             } else if block.previous_block_hash != prev_block.hash {
                 return Err(BlockValidationError::MismatchedPreviousHash);
             }
@@ -60,8 +58,10 @@ impl Blockchain {
             for transaction in transactions {
                 let input_hashes = transaction.input_hashes();
 
-                if !(&input_hashes - &self.unspent_outputs).is_empty() || !(&input_hashes & &block_spent).is_empty() {
-                    return Err(BlockValidationError::InvalidInput)
+                if !(&input_hashes - &self.unspent_outputs).is_empty()
+                    || !(&input_hashes & &block_spent).is_empty()
+                {
+                    return Err(BlockValidationError::InvalidInput);
                 }
 
                 let input_value = transaction.input_value();
@@ -84,7 +84,8 @@ impl Blockchain {
                 block_created.extend(coinbase.output_hashes());
             }
 
-            self.unspent_outputs.retain(|output| !block_spent.contains(output));
+            self.unspent_outputs
+                .retain(|output| !block_spent.contains(output));
             self.unspent_outputs.extend(block_created);
         }
 
