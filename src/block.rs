@@ -8,7 +8,7 @@ pub struct Block {
     pub hash: Hash,
     pub previous_block_hash: Hash,
     pub nonce: u64,
-    pub payload: String,
+    pub transactions: Vec<Transaction>,
     pub difficulty: u128,
 }
 
@@ -17,8 +17,7 @@ impl Block {
         index: u32,
         timestamp: u128,
         previous_block_hash: Hash,
-        nonce: u64,
-        payload: String,
+        transactions: Vec<Transaction>,
         difficulty: u128,
     ) -> Block {
         Block {
@@ -26,8 +25,8 @@ impl Block {
             timestamp,
             hash: vec![0; 32],
             previous_block_hash,
-            nonce,
-            payload,
+            nonce: 0,
+            transactions,
             difficulty,
         }
     }
@@ -52,7 +51,10 @@ impl Hashable for Block {
         bytes.extend(&u128_bytes(&self.timestamp));
         bytes.extend(&self.previous_block_hash);
         bytes.extend(&u64_bytes(&self.nonce));
-        bytes.extend(self.payload.as_bytes());
+        bytes.extend(self.transactions
+                              .iter()
+                              .flat_map(|transaction| transaction.bytes() )
+                              .collect::<Vec<u8>>());
         bytes.extend(&u128_bytes(&self.difficulty));
 
         bytes
@@ -71,7 +73,7 @@ impl Debug for Block {
             &self.index,
             &hex::encode(&self.hash),
             &self.timestamp,
-            &self.payload,
+            &self.transactions.len(),
             &self.nonce,
         )
     }
